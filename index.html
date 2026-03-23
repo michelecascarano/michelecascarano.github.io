@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Michele Cascarano — Economist</title>
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <style>
+    /* ============================================================
+       CSS VARIABLES
+       Edit these to change the look of the whole site at once.
+    ============================================================ */
+    :root {
+      --navy:       #1e3a5f;   /* main accent color            */
+      --navy-dark:  #152a45;   /* darker shade for hover       */
+      --accent-bg:  #eef2f7;   /* light accent background      */
+      --tag-bg:     #dde8f5;   /* research interest pill bg    */
+      --text:       #1a202c;   /* main body text               */
+      --muted:      #718096;   /* secondary / gray text        */
+      --border:     #e2e8f0;   /* divider lines                */
+      --white:      #ffffff;
+      --page-bg:    #f7f9fc;
+    }
+
+    /* ============================================================
+       RESET & BASE
+    ============================================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--page-bg);
+      color: var(--text);
+      font-size: 15px;
+      line-height: 1.75;
+    }
+
+    a { color: var(--navy); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ============================================================
+       LAYOUT
+    ============================================================ */
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Each section is a white card */
+    section {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 36px 40px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 4px rgba(0,0,0,.07);
+    }
+
+    /* ============================================================
+       HERO — photo + name + social links
+    ============================================================ */
+    #hero {
+      display: flex;
+      align-items: center;
+      gap: 36px;
+      margin-top: 36px;
+    }
+
+    #hero .photo img {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--navy);
+    }
+
+    #hero h1 {
+      font-size: 26px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 4px;
+    }
+
+    #hero .subtitle {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.5;
+      margin-bottom: 18px;
+    }
+
+    /* Social link buttons */
+    .social-links { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 5px 13px;
+      border: 1.5px solid var(--navy);
+      border-radius: 20px;
+      color: var(--navy);
+      transition: background .15s, color .15s;
+    }
+
+    .social-links a:hover {
+      background: var(--navy);
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    /* ============================================================
+       SECTION TITLE
+    ============================================================ */
+    .section-title {
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid var(--accent-bg);
+    }
+
+    /* ============================================================
+       ABOUT — bio + research tags
+    ============================================================ */
+    .bio { margin-bottom: 18px; }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 8px; }
+
+    .tag {
+      background: var(--tag-bg);
+      color: var(--navy);
+      font-size: 12.5px;
+      font-weight: 500;
+      padding: 4px 14px;
+      border-radius: 20px;
+    }
+
+    /* ============================================================
+       SUBSECTION LABEL (Publications / Working Papers / WIP)
+    ============================================================ */
+    .subsection-label {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .9px;
+      color: var(--muted);
+      margin: 32px 0 14px;
+    }
+
+    .subsection-label:first-of-type { margin-top: 0; }
+
+    /* ============================================================
+       PAPER LIST
+    ============================================================ */
+    .paper-list { list-style: none; }
+
+    .paper-item {
+      display: flex;
+      gap: 14px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .paper-item:last-child { border-bottom: none; }
+
+    /* Year badge */
+    .year {
+      min-width: 46px;
+      text-align: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--navy);
+      background: var(--accent-bg);
+      padding: 3px 6px;
+      border-radius: 6px;
+      height: fit-content;
+      margin-top: 2px;
+    }
+
+    .paper-body { flex: 1; }
+
+    /* Title */
+    .paper-title {
+      font-size: 14.5px;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .paper-title a { color: var(--text); }
+    .paper-title a:hover { color: var(--navy); }
+
+    /* Authors */
+    .paper-authors {
+      font-size: 13px;
+      color: var(--muted);
+      margin-bottom: 3px;
+    }
+
+    /* Journal / WP series */
+    .paper-venue {
+      font-size: 13px;
+      color: var(--navy);
+      font-style: italic;
+      margin-bottom: 8px;
+    }
+
+    /* Row of link pills */
+    .paper-links { display: flex; flex-wrap: wrap; gap: 5px; }
+
+    /* ---- pill base ---- */
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11.5px;
+      font-weight: 500;
+      padding: 3px 10px;
+      border-radius: 12px;
+      text-decoration: none !important;
+      transition: opacity .15s;
+    }
+    .pill:hover { opacity: .75; }
+
+    /* ---- pill color variants ---- */
+    /* Add or edit these to change pill colors */
+    .pill-wp     { background: #e8f0fe; color: #1a56db; } /* working paper / PDF    */
+    .pill-doi    { background: #f1f5f9; color: #475569; } /* journal DOI            */
+    .pill-ssrn   { background: #f0fdf4; color: #166534; } /* SSRN                   */
+    .pill-voxeu  { background: #fef3c7; color: #b45309; } /* VoxEU column           */
+    .pill-suerf  { background: #fce7f3; color: #9d174d; } /* SUERF policy brief     */
+    .pill-media  { background: #fef2f2; color: #991b1b; } /* press / blog coverage  */
+
+    /* Award badge */
+    .award {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #92400e;
+      background: #fffbeb;
+      border: 1px solid #fde68a;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-top: 8px;
+    }
+
+    /* ============================================================
+       FOOTER
+    ============================================================ */
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-bottom: 24px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--navy); }
+
+    /* ============================================================
+       RESPONSIVE
+    ============================================================ */
+    @media (max-width: 600px) {
+      #hero             { flex-direction: column; text-align: center; }
+      #hero .photo img  { width: 110px; height: 110px; }
+      .social-links     { justify-content: center; }
+      section           { padding: 24px 18px; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+
+
+  <!-- ============================================================
+       HERO
+  ============================================================ -->
+  <section id="hero">
+    <div class="photo">
+      <!-- Replace photo.jpg with your image file name -->
+      <img src="photo.jpg" alt="Michele Cascarano">
+    </div>
+    <div>
+      <h1>Michele Cascarano</h1>
+      <p class="subtitle">
+        Economist · Bank of Italy<br>
+        Head of the Economic Research Unit, Trento Branch
+      </p>
+      <div class="social-links">
+        <a href="mailto:michele.cascarano@bancaditalia.it">
+          <i class="fa-solid fa-envelope"></i> Email
+        </a>
+        <a href="https://scholar.google.com/citations?user=APZk0vMAAAAJ&hl=en" target="_blank">
+          <i class="fa-solid fa-graduation-cap"></i> Scholar
+        </a>
+        <a href="https://ideas.repec.org/f/pca1398.html" target="_blank">
+          <i class="fa-solid fa-chart-bar"></i> IDEAS
+        </a>
+        <a href="https://www.linkedin.com/in/michelecascarano/" target="_blank">
+          <i class="fa-brands fa-linkedin"></i> LinkedIn
+        </a>
+        <a href="https://bsky.app/profile/mcascarano.bsky.social" target="_blank">
+          <i class="fa-brands fa-bluesky"></i> Bluesky
+        </a>
+        <a href="cv.pdf" target="_blank">
+          <i class="fa-solid fa-file-pdf"></i> CV
+        </a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       ABOUT
+  ============================================================ -->
+  <section id="about">
+    <h2 class="section-title">About</h2>
+    <p class="bio">
+      Michele Cascarano is an Economist at the Bank of Italy. He is the head of the Economic
+      Research Unit of the Trento branch. His research interests lie in applied microeconomics
+      with a focus on financial intermediation and regional economics. He holds a Ph.D. in
+      Economics from the University of Trento.
+    </p>
+    <div class="tags">
+      <span class="tag">Applied Microeconomics</span>
+      <span class="tag">Financial Intermediation</span>
+      <span class="tag">Regional Economics</span>
+      <span class="tag">Climate &amp; Finance</span>
+      <span class="tag">Urban Economics</span>
+    </div>
+  </section>
+
+
+  <!-- ============================================================
+       RESEARCH
+  ============================================================ -->
+  <section id="research">
+    <h2 class="section-title">Research</h2>
+
+
+    <!-- ---- PUBLICATIONS ---- -->
+    <p class="subsection-label">Publications</p>
+    <ul class="paper-list">
+
+      <li class="paper-item">
+        <span class="year">2026</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1016/j.bar.2026.101845" target="_blank">
+              Asset revaluations and credit conditions
+            </a>
+          </div>
+          <div class="paper-authors">with Cristina Demma, Litterio Mirenda</div>
+          <div class="paper-venue">The British Accounting Review, 2026</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1016/j.bar.2026.101845" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2025/2025-1486/en_tema_1486.pdf" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5244487" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+            <a class="pill pill-suerf" href="https://www.suerf.org/wp-content/uploads/2025/06/SUERF-Policy-Brief-1194_Cascarano_Demma_Mirenda.pdf" target="_blank">
+              <i class="fa-solid fa-file-pdf"></i> SUERF
+            </a>
+          </div>
+        </div>
+      </li>
+
+
+      <li class="paper-item">
+        <span class="year">2025</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://www.sciencedirect.com/science/article/pii/S001429212500078X" target="_blank">
+              Entry, exit, and market structure in a changing climate
+            </a>
+          </div>
+          <div class="paper-authors">with Filippo Natoli, Andrea Petrella</div>
+          <div class="paper-venue">European Economic Review, Vol. 176, 2025</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2023/2023-1418/index.html" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-voxeu" href="https://cepr.org/voxeu/columns/long-run-effects-climate-change-corporate-sector-case-italy" target="_blank">
+              <i class="fa-solid fa-newspaper"></i> VoxEU
+            </a>
+            <a class="pill pill-suerf" href="https://www.suerf.org/suerf-policy-brief/74957/how-does-climate-change-reshape-the-corporate-sector-evidence-from-italian-firms" target="_blank">
+              <i class="fa-solid fa-file-pdf"></i> SUERF
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2025</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1007/s10584-024-03847-7" target="_blank">
+              Weathering the storm: the impact of the Vaia storm on tourism flows
+            </a>
+          </div>
+          <div class="paper-authors">with Michael Bernardi, Francesca Modena</div>
+          <div class="paper-venue">Climatic Change, Vol. 178(2), 2025</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1007/s10584-024-03847-7" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4624372" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2024</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1007/s40797-024-00284-4" target="_blank">
+              Geography and access to credit: the case of the Italian Mezzogiorno
+            </a>
+          </div>
+          <div class="paper-authors">with Carlo Bottoni, Iconio Garrì, Litterio Mirenda, Paolo Emilio Mistrulli, Dalia Maria Pizzillo, Davide Revelli, Tiziano Ropele</div>
+          <div class="paper-venue">Italian Economic Journal, Vol. 10(3), 2024</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1007/s40797-024-00284-4" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/qef/2022-0710/index.html" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2024</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://www.sciencedirect.com/science/article/pii/S016604622400012X" target="_blank">
+              Pirate attacks and the shape of the Italian urban system
+            </a>
+          </div>
+          <div class="paper-authors">with Antonio Accetturo, Guido de Blasio</div>
+          <div class="paper-venue">Regional Science and Urban Economics, Vol. 108, 2024</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://ideas.repec.org/p/trn/utwprg/2019-15.html" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-voxeu" href="https://cepr.org/voxeu/columns/long-run-consequences-pirate-attacks-coasts-italy" target="_blank">
+              <i class="fa-solid fa-newspaper"></i> VoxEU
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2023</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1016/j.jfi.2023.101018" target="_blank">
+              The role of culture in firm-bank matching
+            </a>
+          </div>
+          <div class="paper-authors">with Antonio Accetturo, Giorgia Barboni, Emilia Garcia-Appendini</div>
+          <div class="paper-venue">Journal of Financial Intermediation, Vol. 53, 2023</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1016/j.jfi.2023.101018" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=3882637" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2023</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1080/00343404.2022.2035708" target="_blank">
+              Resilience to health shocks and the spatial extent of local labour markets: evidence from the Covid-19 outbreak in Italy
+            </a>
+          </div>
+          <div class="paper-authors">with Mattia Borsati, Marco Percoco</div>
+          <div class="paper-venue">Regional Studies, Vol. 57(12), 2023</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1080/00343404.2022.2035708" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2019</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1007/s40888-019-00155-7" target="_blank">
+              Dynamics of urban growth: Italy, 1951–2011
+            </a>
+          </div>
+          <div class="paper-authors">with Antonio Accetturo, Guido de Blasio</div>
+          <div class="paper-venue">Economia Politica, Vol. 36(2), 2019</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1007/s40888-019-00155-7" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2019</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1016/j.ecotra.2019.100100" target="_blank">
+              On the impact of average speed enforcement systems in reducing highway accidents: evidence from the Italian Safety Tutor
+            </a>
+          </div>
+          <div class="paper-authors">with Mattia Borsati, Flavio Bazzana</div>
+          <div class="paper-venue">Economics of Transportation, Vol. 20, 2019</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1016/j.ecotra.2019.100100" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2019</span>
+        <div class="paper-body">
+          <div class="paper-title">
+            <a href="https://doi.org/10.1080/00343404.2019.1593344" target="_blank">
+              The effects of common culture and language on economic exchanges: evidence from tourist flows
+            </a>
+          </div>
+          <div class="paper-authors">with Antonio Accetturo, Petra Degasperi, Francesca Modena</div>
+          <div class="paper-venue">Regional Studies, Vol. 53(11), 2019</div>
+          <div class="paper-links">
+            <a class="pill pill-doi" href="https://doi.org/10.1080/00343404.2019.1593344" target="_blank">
+              <i class="fa-solid fa-link"></i> DOI
+            </a>
+          </div>
+        </div>
+      </li>
+
+    </ul><!-- /publications -->
+
+
+    <!-- ---- WORKING PAPERS ---- -->
+    <p class="subsection-label">Working Papers</p>
+    <ul class="paper-list">
+
+
+      <li class="paper-item">
+        <span class="year">2025</span>
+        <div class="paper-body">
+          <div class="paper-title">EU views and household investments: evidence from the Brexit referendum</div>
+          <div class="paper-authors">with Laura Sigalotti, Francesco Stradi</div>
+          <div class="paper-venue">Bank of Italy, Temi di Discussione No. 1504</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2025/2025-1504/en_tema_1504.pdf" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2024</span>
+        <div class="paper-body">
+          <div class="paper-title">Cultural bonds</div>
+          <div class="paper-authors">with Emilia Garcia-Appendini, Naciye Sekerci, Francesco Stradi</div>
+          <div class="paper-venue">Norges Bank Working Paper No. 5/2025</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.norges-bank.no/en/news-events/publications/Working-Papers/2025/wp-52025/" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4836119" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+          </div>
+          <div class="award">
+            <i class="fa-solid fa-trophy"></i>
+            Best Paper Award in Behavioral Finance — World Finance Conference 2024
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2024</span>
+        <div class="paper-body">
+          <div class="paper-title">Green granular borrowers</div>
+          <div class="paper-authors">with Margherita Bottero</div>
+          <div class="paper-venue">Bank of Italy, Temi di Discussione No. 1471</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2024/2024-1471/index.html" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=5241727" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2024</span>
+        <div class="paper-body">
+          <div class="paper-title">Credit supply and green investments</div>
+          <div class="paper-authors">with Antonio Accetturo, Giorgia Barboni, Emilia Garcia-Appendini, Marco Tomasi</div>
+          <div class="paper-venue">Bank of Italy, Temi di Discussione No. 1456</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2024/2024-1456/index.html" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4093925" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+            <a class="pill pill-voxeu" href="https://cepr.org/voxeu/columns/credit-supply-and-green-investment" target="_blank">
+              <i class="fa-solid fa-newspaper"></i> VoxEU
+            </a>
+            <a class="pill pill-suerf" href="https://www.suerf.org/wp-content/uploads/2024/09/SUERF-Policy-Brief-967_Cascarano-et-al.pdf" target="_blank">
+              <i class="fa-solid fa-file-pdf"></i> SUERF
+            </a>
+          </div>
+        </div>
+      </li>
+
+      <li class="paper-item">
+        <span class="year">2023</span>
+        <div class="paper-body">
+          <div class="paper-title">Temperatures and search: evidence from the housing market</div>
+          <div class="paper-authors">with Filippo Natoli</div>
+          <div class="paper-venue">Bank of Italy, Temi di Discussione No. 1419</div>
+          <div class="paper-links">
+            <a class="pill pill-wp" href="https://www.bancaditalia.it/pubblicazioni/temi-discussione/2023/2023-1419/en_tema_1419.pdf" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> Working Paper
+            </a>
+            <a class="pill pill-ssrn" href="https://papers.ssrn.com/sol3/papers.cfm?abstract_id=4849126" target="_blank">
+              <i class="fa-solid fa-file-lines"></i> SSRN
+            </a>
+            <a class="pill pill-voxeu" href="https://cepr.org/voxeu/columns/hot-temperatures-new-player-housing-markets" target="_blank">
+              <i class="fa-solid fa-newspaper"></i> VoxEU
+            </a>
+            <a class="pill pill-media" href="https://www.nakedcapitalism.com/2023/09/hot-temperatures-a-new-player-in-housing-markets.html" target="_blank">
+              <i class="fa-solid fa-globe"></i> Naked Capitalism
+            </a>
+          </div>
+        </div>
+      </li>
+
+    </ul><!-- /working papers -->
+
+
+    <!-- ---- WORK IN PROGRESS ---- -->
+    <p class="subsection-label">Work in Progress</p>
+    <ul class="paper-list">
+
+      <!--
+        TO ADD A PAPER, copy and paste this block:
+
+        <li class="paper-item">
+          <span class="year">2025</span>
+          <div class="paper-body">
+            <div class="paper-title">Paper title here</div>
+            <div class="paper-authors">with Co-author Name</div>
+          </div>
+        </li>
+      -->
+
+      <li class="paper-item" style="color: var(--muted); font-size: 13px; font-style: italic; border: none;">
+        Coming soon.
+      </li>
+
+    </ul><!-- /work in progress -->
+
+  </section><!-- /research -->
+
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer>
+    <a href="mailto:michele.cascarano@bancaditalia.it">michele.cascarano@bancaditalia.it</a>
+    &nbsp;·&nbsp; © 2025 Michele Cascarano
+  </footer>
+
+
+</div><!-- /container -->
+</body>
+</html>

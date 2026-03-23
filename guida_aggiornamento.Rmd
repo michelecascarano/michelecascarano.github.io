@@ -1,0 +1,219 @@
+---
+title: "Come aggiornare il sito web"
+author: "Guida per Michele Cascarano"
+date: "Marzo 2025"
+output:
+  pdf_document:
+    toc: true
+    toc_depth: 2
+    number_sections: true
+    latex_engine: xelatex
+geometry: margin=2.5cm
+fontsize: 11pt
+---
+
+\newpage
+
+# Introduzione
+
+Il sito è un singolo file HTML (`index.html`) nella cartella `personal_website`.
+Aprilo con qualsiasi editor di testo (VS Code, TextEdit, Notepad++) per modificarlo.
+La struttura è divisa in **sezioni chiaramente commentate** nel codice, così è
+facile trovare il punto giusto dove intervenire.
+
+---
+
+# Aggiungere un nuovo paper
+
+## Scegliere la sezione giusta
+
+Il file contiene tre sezioni di paper. Cerca nel codice il commento corrispondente:
+
+- `<!-- ---- PUBLICATIONS ---- -->`
+- `<!-- ---- WORKING PAPERS ---- -->`
+- `<!-- ---- WORK IN PROGRESS ---- -->`
+
+## Copiare il blocco base
+
+Incolla questo blocco **all'inizio** della lista `<ul>` della sezione (i paper sono
+in ordine cronologico decrescente, i più recenti prima):
+
+```html
+<li class="paper-item">
+  <span class="year">2025</span>
+  <div class="paper-body">
+    <div class="paper-title">
+      <a href="LINK_PAPER" target="_blank">Titolo del paper</a>
+    </div>
+    <div class="paper-authors">with Nome Cognome, Nome Cognome</div>
+    <div class="paper-venue">Nome Rivista, Vol. X(N), Anno</div>
+    <div class="paper-links">
+      <!-- aggiungi qui i pill con i link -->
+    </div>
+  </div>
+</li>
+```
+
+Se il paper non ha ancora un link (work in progress), puoi omettere il tag `<a>`
+e scrivere solo il titolo:
+
+```html
+<div class="paper-title">Titolo del paper</div>
+```
+
+---
+
+# I link "pill"
+
+Ogni paper può avere una riga di link colorati (chiamati *pill*).
+Per aggiungerne uno, usa questo formato dentro `<div class="paper-links">`:
+
+```html
+<a class="pill TIPO" href="URL" target="_blank">
+  <i class="fa-solid ICONA"></i> Etichetta
+</a>
+```
+
+## Tipi di pill disponibili
+
+| Classe CSS    | Colore  | Uso consigliato               |
+|---------------|---------|-------------------------------|
+| `pill-doi`    | Grigio  | DOI o link alla rivista       |
+| `pill-wp`     | Blu     | Working paper / PDF Banca d'Italia |
+| `pill-ssrn`   | Verde   | SSRN                          |
+| `pill-voxeu`  | Giallo  | Colonna VoxEU                 |
+| `pill-suerf`  | Rosa    | SUERF Policy Brief            |
+| `pill-media`  | Rosso   | Blog, stampa, altri media     |
+
+## Icone disponibili (Font Awesome)
+
+| Icona CSS                        | Aspetto  | Uso                  |
+|----------------------------------|----------|----------------------|
+| `fa-solid fa-link`               | link       | DOI / link generico  |
+| `fa-solid fa-file-lines`         | documento       | Working paper / SSRN |
+| `fa-solid fa-newspaper`          | giornale       | VoxEU / stampa       |
+| `fa-solid fa-file-pdf`           | pdf       | PDF                  |
+| `fa-solid fa-globe`              | globo       | Sito web generico    |
+
+## Esempio completo
+
+```html
+<div class="paper-links">
+  <a class="pill pill-doi" href="https://doi.org/..." target="_blank">
+    <i class="fa-solid fa-link"></i> DOI
+  </a>
+  <a class="pill pill-wp" href="https://bancaditalia.it/..." target="_blank">
+    <i class="fa-solid fa-file-lines"></i> Working Paper
+  </a>
+  <a class="pill pill-voxeu" href="https://cepr.org/voxeu/..." target="_blank">
+    <i class="fa-solid fa-newspaper"></i> VoxEU
+  </a>
+</div>
+```
+
+---
+
+# Aggiungere un award
+
+Incolla questo blocco **dopo** `</div>` che chiude `paper-links`:
+
+```html
+<div class="award">
+  <i class="fa-solid fa-trophy"></i>
+  Nome del premio — Conferenza, Anno
+</div>
+```
+
+---
+
+# Spostare un paper da una sezione all'altra
+
+Per esempio, quando un working paper viene pubblicato:
+
+1. Trova il blocco `<li class="paper-item">...</li>` nella sezione Working Papers
+2. Taglia tutto il blocco (da `<li` fino al `</li>` corrispondente)
+3. Incollalo nella sezione Publications, nella posizione giusta per anno
+4. Aggiorna `<div class="paper-venue">` con il nome della rivista
+5. Aggiungi un pill `pill-doi` con il link DOI
+
+---
+
+# Modificare la bio e i tag
+
+## Bio
+
+Cerca la sezione `<!-- ABOUT -->` e modifica il testo dentro il tag `<p class="bio">`.
+
+## Tag di ricerca
+
+I tag sono gli ovali colorati sotto la bio. Aggiungine o modificane uno così:
+
+```html
+<span class="tag">Nuovo interesse di ricerca</span>
+```
+
+---
+
+# Cambiare il colore accent
+
+In cima al file, nella sezione `CSS VARIABLES`, cambia il valore di `--navy`:
+
+```css
+:root {
+  --navy: #1e3a5f;  /* <- sostituisci con qualsiasi colore hex */
+  ...
+}
+```
+
+Esempi di colori alternativi:
+
+| Colore       | Codice hex  |
+|--------------|-------------|
+| Blu navy     | `#1e3a5f`   |
+| Verde salvia | `#2d6a4f`   |
+| Bordeaux     | `#6b1a2a`   |
+| Grigio scuro | `#2d3748`   |
+
+---
+
+# Aggiornare il sito su GitHub
+
+Dopo ogni modifica, per pubblicare online esegui questi tre comandi
+nel terminale dalla cartella del progetto:
+
+```bash
+cd /Users/mcascarano/code/personal_website
+
+git add .
+git commit -m "Descrizione della modifica"
+git push
+```
+
+Il sito si aggiorna automaticamente su GitHub Pages entro 1-2 minuti.
+
+---
+
+# Struttura del file index.html
+
+```
+index.html
+|
++-- <head>
+|   +-- CSS Variables (colori)
+|   +-- Stili (font, layout, card, pill...)
+|
++-- #hero         → foto, nome, link social
++-- #about        → bio + tag ricerca
++-- #research
+|   +-- Publications
+|   +-- Working Papers
+|   +-- Work in Progress
+|
++-- footer        → email + copyright
+```
+
+---
+
+*Per qualsiasi modifica più complessa (cambio layout, nuove sezioni, ecc.)
+è sufficiente aprire `index.html` in VS Code e usare
+**Ctrl+F** (o Cmd+F su Mac) per cercare il testo da modificare.*
